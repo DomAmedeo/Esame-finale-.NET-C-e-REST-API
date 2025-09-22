@@ -1,0 +1,6 @@
+@Its_31_Esame_RestApi_Sablone_HostAddress = http://localhost:5299
+
+GET {{Its_31_Esame_RestApi_Sablone_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

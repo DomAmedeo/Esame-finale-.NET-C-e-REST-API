@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Its_31_Esame_RestApi_Sablone/1.0.0": {
+        "runtime": {
+          "Its_31_Esame_RestApi_Sablone.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Its_31_Esame_RestApi_Sablone/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
