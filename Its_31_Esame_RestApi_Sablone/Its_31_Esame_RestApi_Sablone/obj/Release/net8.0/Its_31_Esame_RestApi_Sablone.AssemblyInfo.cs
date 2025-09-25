@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Its_31_Esame_RestApi_Sablone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cceb96f7130697c7dc33185599015a11c5fc1838")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d713bd0fb30f1ba22fb90e482d48cbebbf72321b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Its_31_Esame_RestApi_Sablone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Its_31_Esame_RestApi_Sablone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
