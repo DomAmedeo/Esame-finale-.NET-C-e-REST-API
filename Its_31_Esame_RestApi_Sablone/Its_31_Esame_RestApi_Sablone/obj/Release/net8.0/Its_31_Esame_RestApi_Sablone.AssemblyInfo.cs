@@ -12,7 +12,7 @@ using System;
 using System.Reflection;
 
 [assembly: System.Reflection.AssemblyCompanyAttribute("Its_31_Esame_RestApi_Sablone")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cceb96f7130697c7dc33185599015a11c5fc1838")]
 [assembly: System.Reflection.AssemblyProductAttribute("Its_31_Esame_RestApi_Sablone")]
