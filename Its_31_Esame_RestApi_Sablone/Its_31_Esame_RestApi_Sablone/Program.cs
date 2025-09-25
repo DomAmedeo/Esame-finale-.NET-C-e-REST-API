@@ -80,7 +80,7 @@ app.MapDelete("api/autori/{varID}", (int varID) =>
     return Results.NotFound();
 });
 
-//modifica autore
+//modifica autore e libri
 app.MapPut("api/autori/{varID}", (int varID,Autore autoreNuovo) =>
 {
     Autore? autoreVecchio = autori.FirstOrDefault(aut => aut.Id == varID);
@@ -100,11 +100,6 @@ app.MapPut("api/autori/{varID}", (int varID,Autore autoreNuovo) =>
 });
 
 
-//Visualizza Libro in base all'ID(DA IMPLEMENTARE)
-app.MapGet("api/libri/{varID}", (int varID) =>
-{
-
-});
 
 //inserire un libro se l'autore è gia esistente, oppure inserire un nuovo autore con nuovi libri
 app.MapPost("api/libri/{autID}", (int autID, Autore autoreNuovo ) =>
@@ -129,6 +124,15 @@ app.MapPost("api/libri/{autID}", (int autID, Autore autoreNuovo ) =>
     }
 });
 
+//app.MapDelete("api/autore/{autID}/libri{libID}", (int autID, int libID, Libro libro, Autore autore) => 
+//{
+//    Autore? aut = autori.FirstOrDefault(a => a.Id == autID);
+//    if (aut is not null)
+//    {
+//        var tutti_libri = autori.SelectMany(lbr => lbr.Libri).FirstOrDefault(libro => libro.Id == libID);
+//    }
+        
+//});
 
 
 
