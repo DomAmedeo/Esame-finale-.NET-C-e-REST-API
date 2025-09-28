@@ -1,0 +1,96 @@
+Tesina teorica Esame finale .NET C# e REST API Sablone
+
+Le RestApi permettono a sistemi diversi di scambiarsi informazioni di qualsiasi natura attraverso internet.
+I due acronimi uniti fra di loro rappresentano:
+- Rest(Representational State Transfer): è uno stile architetturale che descrive come dovrebbero comunicare i sistemi web;
+- Api (Application Programming Inteface): che rapprenseta un'interfaccia, ovvero un insieme di regole che permettono alle applicazioni di comunicare fra loro, utilizzando un protocollo predefinito.
+Quindi possiamo prendere in considerazione un'architettura Client/Server, dove attraverso il protocollo di comunicazione HTTP,il Client fa delle richieste al Server (HTTP Request),e per ogni richiesta,il Server emette una risposta che consegna al client (HTTP Response).
+
+Come le RestApi si integrano in un'architettura tree tier? Cosa c'entra il protocollo HTTP in tutto questo?
+Un'architettura tree tier è composta da tre livelli:
+- la User Interface, il punto di accesso di un individuo, quindi dove noi interagiamo per ricevere un servizio da un sistema;
+- la Business Logic, dove risiedono tutte le operazioni che un software puo svolgere, possiamo definirla come la mente, il nucleo centrale dell'applicazione,perchè è posta fra la UI ed il DB;
+- il Data Base: ovvero dove si immagazzineranno tutti i dati.
+
+Questa tipologia di architettura presenta due punti uno positivo ed uno negativo.
+
+Il punto positivo si verifica nel momento in cui si vuole cambiare la business logic dell'applicazione, quindi basterà implementare una nuova BL senza cambiare nulla al livello del Database o della User Interface, oppure se avviene per qualunque motivo un malfunzionamento nella Business Logic, non accadrà assolutamente niente alla UI o al DB della nostra applicazione.
+
+Il punto negativo di questa architettura è dato dal fatto che la Busines Logic non può comunicare con tutti i tipi di User Interface(Angular, React , Html ecc..), qui viene in aiuto l'API che si inserisce fra la Business Logic e la User Interface,essa fornisce un interfaccia di comunicazione comune per tutti i client, che inviano dati di solito sottoforma di JSON alla BL attraverso le API, con spesso il protocollo HTTP (quest'ultimo non è l'unico protocollo di trasporto utilizzato dalle API, ed il JSON come gia detto non è l'unico formato dati utilizzato).
+
+Quindi tentando di riassumere possiamo dire che:
+- Lo stile architetturale Rest è compatibile con lo stile architetturale tree tier (DB tier, BL tier, UI tier).
+Mentre le 3 tier descrivono come organizziamo un’applicazione internamente (UI, BL, DB),Rest descrive come i sistemi diversi comunicano via rete, indipendentemente da come sono fatti dentro.
+- Le API sono un meccanismo di comunicazione universale che si inseriscono fra la (BL e la UI).Sono un contratto che espone la Business Logic in una forma standardizzata come ad esempio le richieste e le risposte fra UI e BL avvengono consumando il protocollo HTTP e comunicando con il linguaggio JSON.
+
+Abbiamo detto che l'apporoccio Rest è basato sul protocollo HTTP, quindi prevede sempre la comunicazione fra il client ed il server, questa comunicazione avviene tramite i metodi HTTP, che permettono di interagire con le risorse.I 5 Metodi HTTP più comuni nello sviluppo delle RestApi sono GET, PUT, DELETE, POST e PATCH: questi “verbi” essenziali permettono di eseguire le cosiddette operazioni CRUD (Create, Read, Update, Delete), ovvero consentono di creare, leggere, aggiornare e cancellare le risorse.
+Vediamo più nello specifico cosa avviene utilizzando questi metodi:
+-il metodo Get, che nel nostro caso è: (app.MapGet("api/autori/{varID}", (int varID) =>...). Ci permette di entrare nel browser(il nostro client) per effettuare una ricerca per ID all'interno della lista Libri presente nel Web Server.
+Come funziona il metodo GET a differenza del metodo POST?
+Il metodo Get ci permette attraverso l' header, di inserire il destinatario, il mittente ed i dati da inviare al server. Nel nostro caso, il server restituisce un preciso Autore utilizzando il suo ID come parametro di ricerca. Il metodo get però non è molto efficente, perchè presenta una limitazione ai dati che possiamo inviare al server, per questo interviene il metodo POST.
+-il metodo POST nel nostro caso: (app.MapPost("api/autori", (Autore autore) =>...). Ci permette di creare ed inviare dati al server attraverso il body (o payload), questo metodo è piu efficente perche ora nell'header avremo solo le informazioni rigurdanti il destinatario e il mittente, mentre nel payload inseriremo tutti i dati che vogliamo inviare al server.
+Ora non è più possibile utilizzare il browser per comunicare con il Server, ma abbiamo bisogno di programmi come POSTMAN che ci permettono di inviare al server informazioni, inserite appunto nel body,con il formato JSON, utile perchè è veloce nella comunicazione e nella lettura sia per la macchina che per l'umano.
+-Il metodo Delete nel nostro caso : (app.MapDelete("api/autori/{varID}", (int varID) =>...). Ci permette, sempre attraverso POSTMAN, di fare una ricerca per ID ed una volta trovata questa risorsa ci permette di eliminarla.
+-Il metodo PUT nel nostro caso : (app.MapPut("api/autori/{varID}", (int varID,Autore autoreNuovo) => ...) ci permette di modificare una risorsa. 
+La modifica di questa risorsa avviene attraverso la ricerca per ID dell Autore e successivamente una volta trovato l'autore, sostituitlo con la nuova istanza inserita sempre nel body attraverso POSTMAN.
+
+I codi di stato HTTP derivano dalle richieste e dalle risposte fatte fra Client e Server con i metodi HTTP.
+Questi codici, che generalmente restano nascosti all’utilizzatore del servizio, permettono al client di conoscere l’esito della sua richiesta ancora prima di analizzare il payload, che è la risposta vera e propria del Server. 
+Quale è il collegamento fra i codici di stato HTTP e le RESTAPI?
+Nelle chiamate API succede esattamente quello che succede quando, navigando in internet, un client HTTP chiede una risorsa a un server: quando il client API fa la sua richiesta, il server risponde inviando l’HTTP Status Code che indica il tipo di risposta. Quello che cambia è il contenuto della risposta, o payload, che invece di contenere una pagina HTML contiene un JSON.
+Quindi al invio di una interrogazione da parte del Client API al Server, si riceve sempre una riposta formata da:
+- Codice di stato HTTP: sono composti di tre cifre. Indicano l’esito della comunicazione e danno informazioni al Client su come procedere;
+- Header: contiene gli attributi di intestazione, che riguardano generalmente il formato del corpo della richiesta;
+- Payload: è il contenuto vero e proprio della risposta API, quello che contiene i dati;
+Questi status code sono fondamentali per il client perchè gli permettono di capire cosa è successo durante il trasferimento ancora prima di analizzare il contenuto della risposta.
+I codici di stato HTTP sono divisi in cinque classi, ciascuna delle quali inizia con una cifra che indica il tipo di risposta:
+- 1xx MESSAGGIO INFORMATIVO: questa risposta indica che il server ha ricevuto la risposta e la sta elaborando;
+- 2xx MESSAGGIO DI SUCCESSO: questa risposta indica invece che il server ha ricevuto la richiesta correttamente;
+- 3xx RISPOSTA DI REINDIRIZZAMENTO: comunicano al client che deve eseguire delle azioni aggiuntive per soddisfare la richiesta;
+- 4xx MESSAGGIO DI ERRORE DEL CLIEN: queste risposte indicano che la richiesta non può essere soddisfatta a causa di un errore del client, che potrebbe aver sbagliato la sintassi o non disporre delle autorizzazioni necessarie;
+- 5xx RISPOSTA DI ERRORE DEL SERVER: indica che il server non ha soddisfatto la richiesta perché ha riscontrato un errore o non riesce a gestire la richiesta;
+
+DIFFERENZA FRA RESTAPI - GRAPHQL - SOAP
+Abbiamo capito fino ad ora che le API sono la linfa vitale dei servizi web contemporanei, perchè sono i canali attraverso i quali i componenti software interagiscono ed i dati fluscono su Internet.
+Esistono però diverse tecnologie API come SOAP(un protocollo di messaggistica per servizi web), REST (uno stile architettonico) e GraphQL (un linguaggio e uno strumento di programmazione)che semplificano lo sviluppo del software consentendo l'integrazione di dati e servizi di terze parti.
+
+-REST
+Sviluppato nei primi anni 2000 è uno stile architettonico, progettato per utilizzare un protocollo di comunicazione client/server senza stato e memorizzabile nella cache.
+Le API REST utilizzano degli identificatori di risorse univoci (URI) per indirizzare le risorse, esse funzionano facendo in modo che diversi endpoint eseguano operazioni CRUD per le risorse di rete, affidandosi a un formato di dati predefinito fra cui JSOn, XML ed altri. 
+Quindi nella sostanza il Client richiede una risorsa, il Server la elabora e restituisce tutti i dati associati a quest'ultima,includendo i codici di risposta HTTP.
+
+-Graphql
+Sviluppato da Facebook, graphql è un linguaggio di query definito dallo schema API scritto nel linguaggio di definizione dello schema GraphQL. 
+Ogni schema specifica i tipi di dati che l'utente può interrogare, modificare e le relazioni fra i tipi.
+Il resolver invece fornisce istruzioni per trasformare le query, recuperare dati da DB, cloud e service, i resolver forniscono anche specifiche di formattazione dei dati e consentono al sistema di unire i dati da varie fonti.
+GraphQL a differenza di REST fornisce un unico endpoint attraverso il quale i client inviano richieste GraphQL, mentre L'API accede alle risorse per fornire al client tutti i dati di cui ha bisogno da una singola query al Server GraphQL.
+
+- SOAP
+Il Simple Object Access Protocol è un modo per passare le informazioni tra le applicazioni in formato XML.
+Il SOAP permette di far comunicare due applicazioni tramite il protocollo HTTP, i messaggi di scambio sono composti da:
+- Busta, un elemento obbligatorio e radice del messaggio SOAP, identifica l'XML trasmesso come pacchetto SOAP. Una Busta a sua volta contiene una sezione header opzionale e una sezione body obbligatoria.
+-Header, fornisce un meccanismo di estensione che indica le informazioni di elaborazione per il messaggio.
+-Body, Questo elemento contiene il payload del messaggio, i dati trasmessi tra le applicazioni di invio e ricezione. Il corpo stesso può consistere in più elementi child, con uno schema XML che tipicamente definisce la struttura di questi dati.
+
+SOAP, come REST, permette di esporre diverse operazioni/servizi accessibili via endpoint, metre in REST ogni risorsa ha un endpoint distinto, in SOAP in genere c'è solo un endpoint, all'interno del quale sono presenti più operazioni.
+Inoltre in SOAP è presente una tipizzazione forte, il WSDL (Web Services Description Language) definisce con precisione quali operazioni sono disponibili, quali parametri richiedono e che tipo di risposta viene restituita.
+Il formato dei messaggi (REQUEST e RESPONSE) è sempre in formato XML.
+
+Sia le API GraphQL che le API REST sono interscambi di dati basati su risorse che utilizzano metodi HTTP, che determinano quali operazioni un client può eseguire. 
+Mentre il recupero dati nelle REST avviene attraverso più endpoint, ogni richiesta API qui viene elaborata come nuova query, quindi i client ricevono tutti i dati associati ad una risorsa, creando due problemi:
+- over-fetching: cioè quando il client necessita solo di un sottoinsieme di dati, li riceve comunque tutti;
+- under-fetching: al contrario dell' over-fetching, si verifica quando una chiamata API non restituisce dati sufficenti;
+In GraphQL le API utilizzano un singolo endpoint GraphQL per fornire ai client una risposta precisa e completa in un unico viaggio da una singola richiesta, eliminando i problemi di recupero eccessivo e insufficiente.
+
+- Descrizione del progetto sviluppato
+Nel mio progetto sono presenti sue classi nella cartella Models: Autore e Libro.
+La classe libro è una lista di libri prenseti nella classe Autore.
+Nel program.cs sono presenti tutti gli endpoint che effettueranno le operazioni crud sulla variabile autori, che contiene la lista di autori e libri scritti.
+I principali endpoint generati sono:
+-GET api/autori: che restituisce tutti gli autori e i relativi libri;
+-GET api/autori/{varID}: che restituisce un preciso autore con un preciso id;
+-GET api/nome_autori/{varNome}: che restituisce un autore con un nome preciso;
+-POST api/autori: che crea un nuovo autore da inserire;
+-PUT api/autori/{varID}: che aggiorna nome e libri di un autore;
+-DELETE api/autori/{id}: che elimina un autore;
+-POST api/libri/{autID}: aggiunge libri a un autore esistente oppure crea un nuovo autore con libri.
